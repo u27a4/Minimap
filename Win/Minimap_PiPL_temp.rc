@@ -1,0 +1,54 @@
+
+
+
+
+16000  PiPL  DISCARDABLE
+BEGIN
+	0x0001,	 
+	0, 0x0, 	
+	7, 0x0, 
+	"MIB8",
+	"dnik", 
+	0, 0x0,
+	4, 0x0,
+	"xgEA",
+
+	"MIB8",
+	"eman",
+	0, 0x0,
+	8, 0x0,
+	"\x07Minimap", 
+
+	"MIB8",
+	"gtac", 
+	0, 0x0,
+	16, 0x0,
+	"\x0EGeneral Plugin\0", 
+
+	"MIB8",
+	"srev", 
+	0, 0x0,
+	4, 0x0,
+	0, 1, 
+
+	"MIB8",
+	"4668", 
+	0, 0x0,
+	16, 0x0,
+	"EntryPointFunc\0\0", 
+
+	"MIB8",
+	0x6165464CL, 
+	0L,
+	4L
+	0L, 
+
+	"MIB8",
+	0x61655244L, 
+	0L,
+	4L
+	0L, 
+
+
+END
+

@@ -20,6 +20,7 @@
 #define MINIMAP_MATCH_NAME      "Minimap"
 #define MINIMAP_PREFS_SECTION   "Minimap Preference Section"
 #define MINIMAP_LINE_WIDTH      2
+#define MINIMAP_MARGIN          3
 #define MINIMAP_SNAP_SIZE_X     206
 
 template <>

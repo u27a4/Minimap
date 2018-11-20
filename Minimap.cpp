@@ -30,26 +30,33 @@ DrawMinimap(HWND hWnd)
     SelectObject(hdc, GetStockObject(NULL_PEN));
     if (s_comp_info.durationT.scale != 0 && rect.right != 0)
     {
-        auto ux = (float)rect.right / DECIMAL(s_comp_info.durationT);
+        float ux = max(0, rect.right - MINIMAP_MARGIN * 2) / DECIMAL(s_comp_info.durationT);
 
         int i = 0;
         for (auto li : s_comp_info.layers)
         {
             if (li.in_pointT.scale > 0 && li.durationT.scale > 0 && (s_comp_info.show_shy || !li.shy))
             {
-                int x1 = (int)std::floor(DECIMAL(li.in_pointT) * ux);
-                int x2 = (int)std::floor((DECIMAL(li.in_pointT) + DECIMAL(li.durationT)) * ux);
+                int x1 = MINIMAP_MARGIN + (int)std::floor(DECIMAL(li.in_pointT) * ux);
+                int y1 = MINIMAP_MARGIN + i * MINIMAP_LINE_WIDTH;
+                int x2 = MINIMAP_MARGIN + (int)std::floor((DECIMAL(li.in_pointT) + DECIMAL(li.durationT)) * ux);
+                int y2 = MINIMAP_MARGIN + (i + 1) * MINIMAP_LINE_WIDTH;
 
                 SelectObject(hdc, label_brush[li.lable_id]);
-                Rectangle(hdc, x1, i * MINIMAP_LINE_WIDTH, x2, (i + 1) * MINIMAP_LINE_WIDTH);
+                Rectangle(hdc, x1, y1, x2, y2);
 
                 i++;
             }
         }
 
+        int x1 = MINIMAP_MARGIN + (int)std::floor(DECIMAL(s_comp_info.current_timeT) * ux);
+        int y1 = MINIMAP_MARGIN;
+        int x2 = x1;
+        int y2 = MINIMAP_MARGIN + i * MINIMAP_LINE_WIDTH;
+
         SelectObject(hdc, needle_pen);
-        MoveToEx(hdc, (int)std::floor(DECIMAL(s_comp_info.current_timeT) * ux), 0, NULL);
-        LineTo(hdc, (int)std::floor(DECIMAL(s_comp_info.current_timeT) * ux), rect.bottom);
+        MoveToEx(hdc, x1, y1, NULL);
+        LineTo(hdc, x2, y2);
     }
 
     for (int i = 0; i < AEGP_Label_NUMTYPES; i++)
@@ -198,7 +205,7 @@ GetSnapSizes(AEGP_PanelRefcon refcon, A_LPoint* snapSizes, A_long * numSizesP)
         [](auto li) { return  s_comp_info.show_shy || !li.shy; });
 
     snapSizes[0].x = MINIMAP_SNAP_SIZE_X;
-    snapSizes[0].y = (A_long)(MINIMAP_LINE_WIDTH * num_layers + 1);
+    snapSizes[0].y = (A_long)(MINIMAP_LINE_WIDTH * num_layers + 1 + MINIMAP_MARGIN * 2);
     *numSizesP = 1;
 
     return A_Err_NONE;
